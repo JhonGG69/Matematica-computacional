@@ -1,0 +1,83 @@
+#Crear un data frame (Arreglo de datos)
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sbn
+
+datos = {
+     
+     'Nombres':['Andres','Juan','Carlos','Maria','Juan'],
+     'Edad': [12,14,21,56,80],
+     'Carrera': ['Sistemas','Electronica','Electronica','Sistemas','Sistemas']
+ }
+df = pd.DataFrame(datos)
+print(df)
+
+#Solo columna
+df = pd.DataFrame(datos)
+print(df['Nombres'])
+
+
+
+################################
+#Calcular la media
+
+promedio=df['Edad'].mean()
+print(promedio)
+
+################################################################
+#Estudiantes de sistemas
+Sistemas =df[df['Carrera']=='Sistemas']
+print(Sistemas)
+
+################################################################
+#Edad mayor a 21
+Sistemas =df[(df['Carrera']=='Sistemas') & (df['Edad'] > 21)]
+print(Sistemas)
+
+################################################################|
+#inputacion de datos
+datos = {
+     
+     'Nombres':['Andres','Juan','Carlos','Maria','Blard'],
+     'Edad': [12,None,21,56,None],
+     'Carrera': ['Sistemas','Electronica','Electronica','Sistemas','Sistemas']
+ }
+dfnull = pd.DataFrame(datos)
+print(df)
+
+#Base de datos sin valores nulos (dropna)
+df_sin_nulos = dfnull.dropna(subset=['Edad'])
+print(df_sin_nulos)
+
+#Rellenar datos faltantes .fillna con la media de datos(Media)
+dfnull['Edad'] = dfnull ['Edad'].fillna (dfnull['Edad'].mean())
+print(dfnull)
+
+################################################################
+#Base de datos
+df=pd.read_csv('http://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv')
+print(df)
+
+################################################################
+#Sobrevivientes
+Sobrevivientes =df[df['Survived'] ==1]
+print(Sobrevivientes)
+
+################################################################
+#Mayor de 60
+Sobrevivientes =df[(df['Survived'] ==1) & (df['Age']> 60)]
+print(Sobrevivientes)
+
+#################################################################
+#Edad promedio de las personas fallecidas
+
+Prom_fallecidas = df[df['Survived']== 0]
+print(Prom_fallecidas)
+
+################################################################
+#Graficar los Sobrevivientes por genero
+#diagrama barras
+
+sbn.countplot(x='Sex',hue= 'Survived',data = df)
+plt.title('Grafico de sobrevivencia vs edad')
+plt.show()
